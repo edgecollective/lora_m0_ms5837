@@ -154,24 +154,25 @@ void loop()
    sensor.read();
 
 
-  float d=sensor.depth();
+  float d=sensor.pressure(1.0f);
   
-    Serial.print("Depth: "); 
+    Serial.print("Pressure: "); 
   Serial.println(d); 
 
-  int16_t mydepth = (int) (d*1000);
+  
+  int mypressure = (int) (d*100);
 
-  Serial.print("my depth:");
-  Serial.println(mydepth);
+  Serial.print("my pressure:");
+  Serial.println(mypressure);
   
   //Serial.println(" m");
 
   
   delay(1000); // Wait 1 second between transmits, could also 'sleep' here!
   Serial.println("Transmitting..."); // Send a message to rf95_server
-  
-  char radiopacket[20] = "waterDepth=0.   m  ";
-  itoa(mydepth, radiopacket+13, 10);
+
+  char radiopacket[20] = "press(mbar)=       ";
+  itoa(mypressure, radiopacket+12, 10);
   //itoa(packetnum,radiopacket+18, 2);
   Serial.print("Sending "); Serial.println(radiopacket);
   radiopacket[19] = 0;
